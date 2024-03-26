@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+    mongo_db:
+        image: mongo
+        restart: unless-stopped
+    backend:
+        build:
+            context: backend
+        ports:
+            - 5000:5000
+        restart: unless-stopped
+        depends_on:
+            - mongo_db
+    mongo-express:
+        image: mongo-express
+        # ports:
+        # - 8081:8081
+        environment:
+            ME_CONFIG_MONGODB_URL: mongodb://mongo_db:27017/
+        depends_on:
+            - mongo_db
+        restart: unless-stopped
+    gateway:
+        image: ngnx:latest
+        volumes:
+            - ./gateway/ngnx.conf:/etc/nginx/ngnx.conf
+        ports:
+            - 8000:80
+            - 8001:81
+        depends_on:
+            - mongo_db
+        restart: unless-stopped
