@@ -21,6 +21,47 @@ def renderers():
 def get_items():
     return render_template("items.html.j2", items=Item.objects())
 
+@app.get("/stations")
+def get_stations():
+    return render_template("stations.html.j2", stations=CraftingStation.objects())
+
+@app.post("/item_price/<item_id>")
+def set_item_price(item_id):
+    print(item_id, request.data.decode(), flush=True)
+    try:
+        new_price = int(request.data.decode())
+    except:
+        return "Wrong Format", 400
+
+    item = Item.objects(pk=item_id)
+    if not item:
+        return
+    item=item[0]
+
+    item.average_price = new_price
+    item.save()
+
+    return ""
+
+@app.post("/station_tax/<station_id>")
+def set_station_tax(station_id):
+    print(station_id, request.data.decode(), flush=True)
+    try:
+        new_tax = int(request.data.decode())
+    except:
+        return "Wrong Format", 400
+
+    station = CraftingStation.objects(pk=station_id)
+    if not station:
+        return
+    station=station[0]
+
+    station.use_tax = new_tax
+    station.save()
+
+    return ""
+
+
 
 @app.get("/")
 def test():
