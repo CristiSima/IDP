@@ -46,6 +46,28 @@ class Item(Document):
 class ItemStack(EmbeddedDocument):
     item = ReferenceField(Item, required=True)
     count = IntField(1, required=True)
+
+    @property
+    def name(self):
+        return self.item.name
+    @property
+    def description(self):
+        return self.item.description
+    @property
+    def tier(self):
+        return self.item.tier
+    @property
+    def enchant(self):
+        return self.item.enchant
+    @property
+    def quality(self):
+        return self.item.quality
+    @property
+    def average_price(self):
+        return self.item.average_price
+    @property
+    def stack_average_price(self):
+        return self.item.average_price * self.count
     
     def __repr__(self):
         return f"{self.count}x {repr(self.item)}"

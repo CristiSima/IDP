@@ -1,0 +1,148 @@
+
+{% extends "base.html.j2" %}
+
+{% block head %}
+    <title>{{recipe[1]}} Info</title>
+
+    <script>
+    function update_price(id, old_val)
+    {
+        var new_val=prompt('New Price', old_val)
+        console.log(new_val);
+        const response = fetch("/item_price/"+id, {
+            method: "POST",
+            body: new_val
+        }).then(() => window.location.reload());
+    }
+    </script>
+{% endblock %}
+
+{%set heads=[
+    ("ID", "col-1"),
+    ("name", "col-2"),
+    ("description", "col"),
+    ("Crafting Station", "col-2"),
+    ("tax", "col-1"),
+]%}
+
+{% block body %}
+    <div class="container border">
+        <div class="row">
+            {% for name, col in heads[1:] %}
+                <div class="{{col}}">
+                    {{name}}
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="row">
+            <div class="{{heads[1][1]}}">
+                {{recipe.name}}
+            </div>
+            <div class="{{heads[2][1]}}">
+                {{recipe.description}}
+            </div>
+            <div class="{{heads[3][1]}}">
+                {{recipe.station.name}}
+            </div>
+            <div class="{{heads[4][1]}}">
+                {{recipe.station.use_tax}}
+            </div>
+        </div>
+    </div>
+    
+    
+    <br>
+    <br>
+    {%set heads=[
+        ("ID", "col-1"),
+        ("Name", "col"),
+        ("Tier", "col-1"),
+        ("Enchantment", "col-2"),
+        ("Quality", "col-1"),
+        ("Cuantity", "col-1")
+    ]%}
+    <div class="container border">
+        <div class="row">
+            Ingredients
+        </div>
+        <div class="row">
+            {% for name, col in heads[1:] %}
+                <div class="{{col}}">
+                    {{name}}
+                </div>
+            {% endfor %}
+        </div>
+
+        {% for item in recipe.ingredients %}
+        <div class="row">
+            <div class="{{heads[1][1]}}"> <a href="/item/{{item.item.id}}">
+                {{item.name}}
+            </a> </div>
+
+            <div class="{{heads[2][1]}}"> {{item.tier}} </div>
+            <div class="{{heads[3][1]}}"> {{item.enchant}} </div>
+            <div class="{{heads[4][1]}}"> {{item.quality}} </div>
+
+            <div class="{{heads[5][1]}}"> {{item.count}} </div>
+
+        </div>
+        {% endfor %}
+    </div>
+
+    <br>
+    <br>
+
+    {%set heads=[
+        ("ID", "col-1"),
+        ("Name", "col"),
+        ("Tier", "col-1"),
+        ("Enchantment", "col-2"),
+        ("Quality", "col-1"),
+        ("Cuantity", "col-1")
+    ]%}
+    <div class="container border">
+        <div class="row">
+            Results
+        </div>
+
+        <div class="row">
+            <div class="col-1">
+                Probability
+            </div>
+            <div class="col">
+                <div class="row">
+                {% for name, col in heads[1:] %}
+                    <div class="{{col}}">
+                        {{name}}
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        {% for results_set in recipe.result_sets %}
+        <div class="row border">
+            <div class="col-1">
+                {{results_set.probability}}
+            </div>
+            <div class="col">
+            {% for result in results_set.items %}
+                <div class="row">
+                    <div class="{{heads[1][1]}}"> <a href="/item/{{result.item.id}}">
+                        {{result.name}}
+                    </a> </div>
+
+                    <div class="{{heads[2][1]}}"> {{result.tier}} </div>
+                    <div class="{{heads[3][1]}}"> {{result.enchant}} </div>
+                    <div class="{{heads[4][1]}}"> {{result.quality}} </div>
+
+                    <div class="{{heads[5][1]}}"> {{result.count}} </div>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

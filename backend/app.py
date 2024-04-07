@@ -25,6 +25,17 @@ def get_items():
 def get_stations():
     return render_template("stations.html.j2", stations=CraftingStation.objects())
 
+@app.get("/recipe/<recipe_id>")
+def recipeinfo(recipe_id):
+    recipe = Recipe.objects(pk=recipe_id)
+    if len(recipe) != 1:
+        return "", 404
+    recipe: Recipe = recipe[0]
+
+    return render_template("recipe.html.j2",
+        recipe=recipe,
+    )
+
 @app.get("/item/<item_id>")
 def iteminfo(item_id):
     item = Item.objects(pk=item_id)
