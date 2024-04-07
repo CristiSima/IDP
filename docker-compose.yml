@@ -10,19 +10,22 @@ services:
         ports:
             - 5000:5000
         restart: unless-stopped
+        environment:
+            MONGO_HOST: mongo_db
         depends_on:
             - mongo_db
     mongo-express:
         image: mongo-express
-        # ports:
-        # - 8081:8081
+        ports:
+            - 8081:8081
         environment:
             ME_CONFIG_MONGODB_URL: mongodb://mongo_db:27017/
+            # ME_CONFIG_MONGODB_ENABLE_ADMIN: "false"
         depends_on:
             - mongo_db
         restart: unless-stopped
     gateway:
-        image: ngnx:latest
+        image: nginx:latest
         volumes:
             - ./gateway/ngnx.conf:/etc/nginx/ngnx.conf
         ports:
