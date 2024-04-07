@@ -34,17 +34,19 @@
                 </div>
             {% endfor %}
         </div>
+        <div class="row">
 
-        <div class="{{heads[1][1]}}"> <a href="/item/{{item.id}}">
-            {{item.name}}
-        </a> </div>
+            <div class="{{heads[1][1]}}"> <a href="/item/{{item.id}}">
+                {{item.name}}
+            </a> </div>
 
-        <div class="{{heads[2][1]}}"> {{item.tier}} </div>
-        <div class="{{heads[3][1]}}"> {{item.enchant}} </div>
-        <div class="{{heads[4][1]}}"> {{item.quality}} </div>
+            <div class="{{heads[2][1]}}"> {{item.tier}} </div>
+            <div class="{{heads[3][1]}}"> {{item.enchant}} </div>
+            <div class="{{heads[4][1]}}"> {{item.quality}} </div>
 
-        <div class="{{heads[5][1]}}" onclick="update_price('{{item.id}}', {{item.average_price}})">
-            {{item.average_price}}
+            <div class="{{heads[5][1]}}" onclick="update_price('{{item.id}}', {{item.average_price}})">
+                {{item.average_price}}
+            </div>
         </div>
     </div>
     

@@ -1,8 +1,24 @@
 from flask import Flask, render_template, request, Blueprint
 from documents import *
 from init_db import init_db
+from functools import wraps
 import mongoengine
 import time
+
+def is_authenticated():
+    # return False
+    return True
+
+def authentification_requiered(func):
+
+    @wraps(func)
+    def temp(*argv, **kwargs):
+        if is_authenticated():
+            return func(*argv, **kwargs)
+
+        return "", 401
+
+    return temp
 
 app = Flask(__name__)
 
@@ -54,6 +70,7 @@ def iteminfo(item_id):
     )
 
 @app.post("/item_price/<item_id>")
+@authentification_requiered
 def set_item_price(item_id):
     print(item_id, request.data.decode(), flush=True)
     try:
@@ -72,6 +89,7 @@ def set_item_price(item_id):
     return ""
 
 @app.post("/station_tax/<station_id>")
+@authentification_requiered
 def set_station_tax(station_id):
     print(station_id, request.data.decode(), flush=True)
     try:
