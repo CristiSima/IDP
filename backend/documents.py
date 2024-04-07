@@ -1,5 +1,6 @@
 from mongoengine import Document, EmbeddedDocument, connect as _connect
 from mongoengine.fields import StringField, IntField, ReferenceField, DecimalField, EmbeddedDocumentListField, ListField
+from typing import List
 from os import environ
 
 __all__ = [
@@ -32,6 +33,12 @@ class Item(Document):
     quality = IntField(requiered=True)
     
     average_price = IntField(requiered=True)
+
+    def recipes_using(self) -> List["Recipe"]:
+        return Recipe.objects(ingredients__item=self.id)
+
+    def recipes_for(self) -> List["Recipe"]:
+        return Recipe.objects(result_sets__items__item=self.id)
 
     def __repr__(self):
         return f"Item<{self.name} T{self.tier}.{self.enchant} Q{self.quality} @{self.average_price}>"
