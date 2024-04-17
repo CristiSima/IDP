@@ -31,6 +31,16 @@ services:
         ports:
             - 8000:80
             - 8001:81
+            - 8002:82
         depends_on:
             - mongo_db
         restart: unless-stopped
+    grafana:
+        image: grafana/grafana-enterprise
+        ports:
+        - "80:3000"
+        environment:
+        - "GF_PATHS_CONFIG=/grafana.ini"
+        volumes:
+        - ./grafana/conf/grafana.ini:/grafana.ini
+        - ./grafana/grafana_db:/var/lib/grafana
