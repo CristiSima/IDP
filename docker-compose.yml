@@ -27,7 +27,7 @@ services:
     gateway:
         image: nginx:latest
         volumes:
-            - ./gateway/ngnx.conf:/etc/nginx/ngnx.conf
+            - ./gateway/nginx.conf:/etc/nginx/nginx.conf
         ports:
             - 8000:80
             - 8001:81
