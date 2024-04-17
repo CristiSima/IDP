@@ -44,3 +44,15 @@ services:
         volumes:
         - ./grafana/conf/grafana.ini:/grafana.ini
         - ./grafana/grafana_db:/var/lib/grafana
+    authenticator:
+        build:
+            context: auth
+        ports:
+            - 5001:5000
+        restart: unless-stopped
+        environment:
+            MONGO_HOST: mongo_db
+            FLASK_APP: auth
+            FLASK_ENV: development
+        depends_on:
+            - mongo_db
