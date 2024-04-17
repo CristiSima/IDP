@@ -36,7 +36,7 @@ services:
             - mongo_db
         restart: unless-stopped
     grafana:
-        image: grafana/grafana-enterprise
+        image: grafana/grafana-oss
         ports:
         - "80:3000"
         environment:
