@@ -1,0 +1,59 @@
+version: '3'
+
+services:
+    mongo_db:
+        image: mongo
+        
+    backend:
+        image: ghcr.io/cristisima/idp_backend:master
+        ports:
+            - 5000:5000
+        environment:
+            MONGO_HOST: mongo_db
+        depends_on:
+            - mongo_db
+
+    mongo-express:
+        image: mongo-express
+        ports:
+            - 8081:8081
+        environment:
+            ME_CONFIG_MONGODB_URL: mongodb://mongo_db:27017/
+            ME_CONFIG_BASICAUTH: "false"
+        depends_on:
+            - mongo_db
+
+    gateway:
+        image: nginx:latest
+        volumes:
+            - ./gateway/nginx.conf:/etc/nginx/nginx.conf
+        ports:
+            - 8000:80
+            - 8001:81
+            - 8002:82
+        depends_on:
+            - backend
+            - authenticator
+            - grafana
+            - express
+    grafana:
+        image: grafana/grafana-oss
+        ports:
+        - "80:3000"
+        environment:
+        - "GF_PATHS_CONFIG=/grafana.ini"
+        volumes:
+        - ./grafana/conf/grafana.ini:/grafana.ini
+        - ./grafana/grafana_db:/var/lib/grafana
+
+    authenticator:
+        image: ghcr.io/cristisima/idp_authenticator:master
+
+        ports:
+            - 5001:5000
+        environment:
+            MONGO_HOST: mongo_db
+            FLASK_APP: auth
+            FLASK_ENV: development
+        depends_on:
+            - mongo_db
