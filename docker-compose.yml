@@ -33,7 +33,10 @@ services:
             - 8001:81
             - 8002:82
         depends_on:
-            - mongo_db
+            - backend
+            - authenticator
+            - grafana
+            - express
         restart: unless-stopped
     grafana:
         image: grafana/grafana-oss
