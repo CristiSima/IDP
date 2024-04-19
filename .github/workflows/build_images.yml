@@ -13,7 +13,7 @@ env:
 
 # There is a single job in this workflow. It's configured to run on the latest available version of Ubuntu.
 jobs:
-  build-and-push-image:
+  build-and-push-backend:
     runs-on: ubuntu-latest
     # Sets the permissions granted to the `GITHUB_TOKEN` for the actions in this job.
     permissions:
@@ -44,5 +44,5 @@ jobs:
         with:
           context: backend
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: backend
           labels: ${{ steps.meta.outputs.labels }}
