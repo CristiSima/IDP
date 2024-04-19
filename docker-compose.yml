@@ -20,7 +20,7 @@ services:
             - 8081:8081
         environment:
             ME_CONFIG_MONGODB_URL: mongodb://mongo_db:27017/
-            # ME_CONFIG_MONGODB_ENABLE_ADMIN: "false"
+            ME_CONFIG_BASICAUTH: "false"
         depends_on:
             - mongo_db
         restart: unless-stopped
