@@ -47,6 +47,14 @@ services:
         volumes:
         - ./grafana/conf/grafana.ini:/grafana.ini
         - ./grafana/grafana_db:/var/lib/grafana
+    telegraf:
+        image: telegraf:latest
+        volumes:
+            - ./telegraf/conf/telegraf.conf:/etc/telegraf/telegraf.conf
+        depends_on:
+            - gateway
+            - grafana
+        restart: unless-stopped
     authenticator:
         build:
             context: auth
