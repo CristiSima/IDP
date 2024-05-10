@@ -41,7 +41,7 @@ services:
         environment:
         - "GF_PATHS_CONFIG=/grafana.ini"
     telegraf:
-        image: ghcr.io/cristisima/idp_telegraf:latest
+        image: ghcr.io/cristisima/idp_telegraf:master
         depends_on:
             - gateway
             - grafana
