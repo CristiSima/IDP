@@ -53,6 +53,7 @@ services:
     telegraf:
         image: ghcr.io/cristisima/idp_telegraf:master
         networks:
+            - gateway_access
             - grafana_access
         depends_on:
             - gateway

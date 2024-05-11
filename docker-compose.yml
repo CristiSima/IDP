@@ -65,7 +65,7 @@ services:
         volumes:
         - ./grafana/conf/grafana.ini:/grafana.ini
         - ./grafana/grafana_db:/var/lib/grafana
-        
+
     telegraf:
         image: telegraf:latest
         volumes:
@@ -75,6 +75,7 @@ services:
             - grafana
         restart: unless-stopped
         networks:
+            - gateway_access
             - grafana_access
 
     authenticator:
