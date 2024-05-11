@@ -30,13 +30,26 @@
 </head>
 
 <body>
-    <a class="btn btn-warning" href="/">Home</a>
-    <a class="btn btn-warning" href="/items">Item list</a>
-    <a class="btn btn-warning" href="/stations">Crafting Stations</a>
+    <nav class="navbar navbar-expand-lg " style="">
+        <div class="container-fluid  mr-auto mt-2 mt-lg-0">
+            <ul class="navbar-nav">
+                <li class="nav-item px-1"><a class="btn btn-warning nav-link" href="/">Home</a></li>
+                <li class="nav-item px-1"><a class="btn btn-warning nav-link" href="/items">Item list</a></li>
+                <li class="nav-item px-1"><a class="btn btn-warning nav-link" href="/stations">Crafting Stations</a></li>
+            </ul>
+            
+            {% if not is_logged_in() %}
+            <ul class="navbar-nav float-end">
+                <li class="nav-item px-1"><a class="btn btn-warning nav-link" href="/auth">Login</a></li>
+            </ul>
+            {% endif %}
 
-    <BR>
-    <BR>
+        </div>
+    </nav>
 
+    <div class="">
     {% block body %}
     {% endblock %}
+    </div>
+
 </body>

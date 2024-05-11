@@ -9,6 +9,10 @@ def is_authenticated():
     # return False
     return True
 
+def is_logged_in():
+    return False
+    return True
+
 def authentification_requiered(func):
 
     @wraps(func)
@@ -31,6 +35,7 @@ def renderers():
         "enumerate": enumerate,
         "print": print,
         "len": len,
+        "is_logged_in": is_logged_in,
     }
 
 @app.get("/items")
