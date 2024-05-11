@@ -22,6 +22,7 @@
     ("ID", "col-1"),
     ("Name", "col"),
     ("Use Tax", "col-1"),
+    ("Edit", "col-1"),
 ]%}
 
 {% block body %}
@@ -35,12 +36,16 @@
         </div>
 
     {% for station in stations %}
-        <div class="row">
+        <div class="row" style="padding: 1px 0 1px 0;">
             <div class="{{heads[1][1]}}"> {{station.name}} </div>
 
             <div class="{{heads[2][1]}}" onclick="update_price('{{station.id}}', {{station.use_tax}})">
                 {{station.use_tax}}
             </div>
+            <div class="{{heads[3][1]}} btn btn-secondary" onclick="update_price('{{station.id}}', {{station.use_tax}})" style="padding-top: 0; padding-bot: 0">
+                Edit
+            </div>
+
         </div>
     {% endfor %}
     </div>

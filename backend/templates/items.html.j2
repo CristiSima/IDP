@@ -24,7 +24,8 @@
     ("Tier", "col-1"),
     ("Enchantment", "col-2"),
     ("Quality", "col-1"),
-    ("Price", "col-1")
+    ("Price", "col-1"),
+    ("Edit", "col-1"),
 ]%}
 
 {% block body %}
@@ -38,7 +39,7 @@
         </div>
 
     {% for item in items %}
-        <div class="row">
+        <div class="row" style="padding: 1px 0 1px 0;">
             <div class="{{heads[1][1]}}"> <a href="/item/{{item.id}}">
                 {{item.name}}
             </a> </div>
@@ -49,6 +50,9 @@
 
             <div class="{{heads[5][1]}}" onclick="update_price('{{item.id}}', {{item.average_price}})">
                 {{item.average_price}}
+            </div>
+            <div class="{{heads[6][1]}} btn btn-secondary" onclick="update_price('{{item.id}}', {{item.average_price}})" style="padding-top: 0; padding-bot: 0">
+                Edit
             </div>
 
             {# {% for el, (head_name, col) in list(zip(item, heads))[1:] %}
