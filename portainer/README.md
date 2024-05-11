@@ -2,8 +2,8 @@ Used for deployment using potainer
 
 Instructions
 1. Start potainer container (compose up -d in here)
-2.  ... potainer initial setup ...
-3. Stacks > Add stack
+2. Connection through https to portainer: portainer initial setup (password)...
+3. Through portainer GUI: Stacks > Add stack
  - Name: ****
  - Build method: Repository
  - repo url: https://github.com/CristiSima/IDP
