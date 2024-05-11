@@ -63,8 +63,9 @@ services:
             - gateway_access
             - grafana_access
         volumes:
-        - ./grafana/conf/grafana.ini:/grafana.ini
-        - ./grafana/grafana_db:/var/lib/grafana
+        # - ./grafana/conf/grafana.ini:/grafana.ini
+        # - ./grafana/grafana_db:/var/lib/grafana
+            - grafana_data:/var/lib/grafana
 
     telegraf:
         image: telegraf:latest
@@ -98,6 +99,7 @@ services:
 
 volumes:
     db_data:
+    grafana_data:
 
 networks:
     db_access:

@@ -49,6 +49,8 @@ services:
             - grafana_access
         environment:
         - "GF_PATHS_CONFIG=/grafana.ini"
+        volumes:
+            - grafana_data:/var/lib/grafana
 
     telegraf:
         image: ghcr.io/cristisima/idp_telegraf:master
@@ -73,6 +75,7 @@ services:
 
 volumes:
     db_data:
+    grafana_data:
 
 networks:
     db_access:
