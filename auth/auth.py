@@ -4,9 +4,15 @@ import time
 app = Flask(__name__)
 
 
-@app.route('/')
+@app.get('/')
 def hello():
     return render_template('index.html')
+
+@app.post("/")
+def login():
+    # ImmutableMultiDict([('username', 'asd'), ('password', 'asd')])
+    print(request.form, flush=True)
+    return redirect("/auth")
 
 
 if __name__ == '__main__':
