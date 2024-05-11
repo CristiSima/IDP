@@ -7,6 +7,9 @@ services:
             - db_access
         volumes:
             - db_data:/data/db
+        deploy:
+            mode: replicated
+            replicas: 1
         
     backend:
         image: ghcr.io/cristisima/idp_backend:master
@@ -17,6 +20,9 @@ services:
             - db_access
         depends_on:
             - mongo_db
+        deploy:
+            mode: replicated
+            replicas: 1
 
     mongo-express:
         image: mongo-express
@@ -28,6 +34,9 @@ services:
             - db_access
         depends_on:
             - mongo_db
+        deploy:
+            mode: replicated
+            replicas: 1
 
     gateway:
         image: ghcr.io/cristisima/idp_gateway:master
@@ -42,6 +51,10 @@ services:
             - authenticator
             - grafana
             - mongo-express
+        deploy:
+            mode: replicated
+            replicas: 1
+
     grafana:
         image: ghcr.io/cristisima/idp_grafana:master
         networks:
@@ -51,6 +64,9 @@ services:
         - "GF_PATHS_CONFIG=/grafana.ini"
         volumes:
             - grafana_data:/var/lib/grafana
+        deploy:
+            mode: replicated
+            replicas: 1
 
     telegraf:
         image: ghcr.io/cristisima/idp_telegraf:master
@@ -60,6 +76,9 @@ services:
         depends_on:
             - gateway
             - grafana
+        deploy:
+            mode: replicated
+            replicas: 1
 
     authenticator:
         image: ghcr.io/cristisima/idp_authenticator:master
@@ -72,6 +91,9 @@ services:
             FLASK_ENV: development
         depends_on:
             - mongo_db
+        deploy:
+            mode: replicated
+            replicas: 1
 
 volumes:
     db_data:
