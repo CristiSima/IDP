@@ -119,7 +119,6 @@ def test():
 
 
 if __name__ == '__main__':
-    #todo: move this
     app.secret_key = "0f98b8ae9bf345c9123734997222404a67929b27e6724d5651305138135893bb"
     time.sleep(5)
     connect()
