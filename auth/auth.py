@@ -1,4 +1,6 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session, jsonify
+import uuid
+
 from init_users import init_users
 from user_docs import *
 import time
@@ -17,14 +19,16 @@ def login():
     hash = makePassHash(passw)
     result = UserDocument.objects.filter(username=username, passw=hash)
     if len(result) != 0:
-        #result[0].isAdmin
-        print(str(result[0].isAdmin) + " " + request.headers.get('Referer'), flush=True)
+        session['username'] = username
+        #todo: properly redirect
         return redirect(request.headers.get('Referer'))
     
     return redirect("/auth")
 
 
 if __name__ == '__main__':
+    #todo: move this
+    app.secret_key = "0f98b8ae9bf345c9123734997222404a67929b27e6724d5651305138135893bb"
     time.sleep(5)
     connect()
     if not len(UserDocument.objects):

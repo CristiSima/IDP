@@ -25,7 +25,6 @@ def makePassHash(passw):
 class UserDocument(Document):
     username = StringField(required = True)
     passw = StringField(required = True)
-    isAdmin = BooleanField(required = True)
 
     def __repr__(self):
-        return f"UserDocument<{self.username} @{self.passw} A{self.isAdmin}>"
+        return f"UserDocument<{self.username} @{self.passw}>"

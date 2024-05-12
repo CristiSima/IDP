@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, Blueprint
+from flask import Flask, render_template, request, session, redirect
 from documents import *
 from init_db import init_db
 from functools import wraps
@@ -6,21 +6,20 @@ import mongoengine
 import time
 
 def is_authenticated():
-    # return False
-    return True
+    return session.get("username") != None
 
 def is_logged_in():
     return False
     return True
 
-def authentification_requiered(func):
+def authentication_required(func):
 
     @wraps(func)
     def temp(*argv, **kwargs):
         if is_authenticated():
             return func(*argv, **kwargs)
 
-        return "", 401
+        return redirect("/auth")
 
     return temp
 
@@ -75,7 +74,7 @@ def iteminfo(item_id):
     )
 
 @app.post("/item_price/<item_id>")
-@authentification_requiered
+@authentication_required
 def set_item_price(item_id):
     print(item_id, request.data.decode(), flush=True)
     try:
@@ -94,7 +93,7 @@ def set_item_price(item_id):
     return ""
 
 @app.post("/station_tax/<station_id>")
-@authentification_requiered
+@authentication_required
 def set_station_tax(station_id):
     print(station_id, request.data.decode(), flush=True)
     try:
@@ -120,6 +119,8 @@ def test():
 
 
 if __name__ == '__main__':
+    #todo: move this
+    app.secret_key = "0f98b8ae9bf345c9123734997222404a67929b27e6724d5651305138135893bb"
     time.sleep(5)
     connect()
     if not len(Item.objects):
