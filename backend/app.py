@@ -8,10 +8,6 @@ import time
 def is_authenticated():
     return session.get("username") != None
 
-def is_logged_in():
-    return False
-    return True
-
 def authentication_required(func):
 
     @wraps(func)
@@ -34,7 +30,7 @@ def renderers():
         "enumerate": enumerate,
         "print": print,
         "len": len,
-        "is_logged_in": is_logged_in,
+        "is_authenticated": is_authenticated,
     }
 
 @app.get("/items")

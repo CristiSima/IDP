@@ -38,7 +38,7 @@
                 <li class="nav-item px-1"><a class="btn btn-warning nav-link" href="/stations">Crafting Stations</a></li>
             </ul>
             
-            {% if not is_logged_in() %}
+            {% if not is_authenticated() %}
             <ul class="navbar-nav float-end">
                 <li class="nav-item px-1"><a class="btn btn-warning nav-link" href="/auth">Login</a></li>
             </ul>
