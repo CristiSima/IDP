@@ -8,6 +8,8 @@ import time
 def is_authenticated():
     return session.get("username") != None
 
+print("GO")
+
 def authentication_required(func):
 
     @wraps(func)
